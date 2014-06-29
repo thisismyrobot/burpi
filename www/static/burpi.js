@@ -1,14 +1,17 @@
 function update() {
-    var d1 = [];
-    for (var i = 0; i < 14; i += 0.5) {
-        d1.push([i, Math.sin(i)]);
-    }
-    $.plot("#chart-placeholder", [ d1 ]);
+    $.get('/data', function(data) {
+        var datasets = [];
+        var json = JSON.parse(data);
+        for(sensor in json) {
+            datasets.push(json[sensor]);
+        }
+        $.plot("#chart-placeholder", datasets);
+    });
 }
 
 $(document).ready(function() {
     setInterval(function() {
         update();
-    }, 1000);
+    }, 10000);
     update();
 });
