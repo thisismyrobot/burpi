@@ -10,10 +10,11 @@ import glob
 import itertools
 import os
 import syslog
+import time
 
 
 SYSLOG_IDENT = 'BurPi-temperature'
-SYSLOG_FMT = '{},{}'
+SYSLOG_FMT = '{},{},{}'
 
 
 def temperature(w1_slave_path):
@@ -35,10 +36,13 @@ def cmdline():
     # Detect the sensors
     sensors = glob.glob('/sys/bus/w1/devices/*/w1_slave')
 
-    # Create an iterator of (serial, temperature) tuples
-    data = itertools.izip(
-        map(lambda path: path.split('/')[-2], sensors),
-        map(temperature, sensors)
+    # Create an iterator of (epoch, serial, temperature) tuples
+    data = filter(lambda item: item[2] is not None,
+                  itertools.izip(
+                      [int(time.time())] * len(sensors),
+                      map(lambda path: path.split('/')[-2], sensors),
+                      map(temperature, sensors)
+                  )
     )
 
     # Log the temperatures to syslog
