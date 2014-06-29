@@ -18,6 +18,9 @@ function update() {
                 mode: "time",
                 timeformat: "%h:%M %d/%m",
                 minTickSize: [10, "minute"]
+            },
+            yaxis: {
+                tickDecimals: 0
             }
 	});
     });
