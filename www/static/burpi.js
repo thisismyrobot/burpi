@@ -1,9 +1,8 @@
 function update() {
     $.get('/data', function(data) {
         var datasets = [];
-        var json = JSON.parse(data);
-        for(sensor in json) {
-            datasets.push(json[sensor]);
+        for(sensor in data) {
+            datasets.push(data[sensor]);
         }
         $.plot("#chart-placeholder", datasets);
     });
