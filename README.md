@@ -22,3 +22,15 @@ https://learn.adafruit.com/adafruits-raspberry-pi- lesson-11-ds18b20
 * Python 2.7 (tested on 2.7.3)
 
 * flask (pip install flask)
+
+# Installation
+
+I've installed it in /home/pi/burpi/
+
+If you want a no-frills setup, install it there too and put the following two
+lines in crontab:
+
+    @reboot python /home/pi/burpi/www/app.py
+    * * * * * python /home/pi/burpi/logger.py
+
+The second line will log temperatures to syslog every 1 minute.
